@@ -1,0 +1,8 @@
+﻿@model ReporteTransaccionesDetalladas
+@{
+    //ViewBag sirve para pasar datos de forma rapida y sencilla entre controlador y una vista, es efimero y se debe usar con moderacion
+    ViewData["Title"] = "Movimientos Cuenta";
+}
+<h1>Movimientos @ViewBag.Cuenta</h1>
+
+<partial name="_ReporteTransaccionesDetalladas" model="Model"/>
