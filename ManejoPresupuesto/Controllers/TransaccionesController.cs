@@ -2,6 +2,7 @@
 using ClosedXML.Excel;
 using ManejoPresupuesto.Models;
 using ManejoPresupuesto.Servicios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
@@ -9,6 +10,7 @@ using System.Reflection;
 
 namespace ManejoPresupuesto.Controllers
 {
+    
 
     //Nueva clase TansaccionController que hereda de Controller
     public class TransaccionesController: Controller
@@ -37,6 +39,7 @@ namespace ManejoPresupuesto.Controllers
             this.servicioReportes = servicioReportes;
         }
 
+       
         public async Task<IActionResult> Index(int mes, int año)
         {
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
@@ -266,12 +269,15 @@ namespace ManejoPresupuesto.Controllers
         public async Task<JsonResult> ObtenerTransaccionesPorFecha(DateTime fecha)
         {
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
-            var transacciones = await repositorioTransacciones.ObtenerPorUsuarioId(new ParametroObtenerTransaccionesPorUsuario
-            {
-                UsuarioId = usuarioId,
-                FechaInicio = fecha,
-                FechaFin = fecha
-            });
+
+            var transacciones = await repositorioTransacciones.ObtenerPorUsuarioId(
+               new ParametroObtenerTransaccionesPorUsuario
+               {
+                   UsuarioId = usuarioId,
+                   FechaInicio = fecha,
+                   FechaFin = fecha
+               });
+
             return Json(transacciones);
         }
 
